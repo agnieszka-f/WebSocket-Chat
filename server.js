@@ -23,7 +23,7 @@ const io = socket(server);
 io.on('connection', (socket) => { 
   socket.on('user', (user)=> { 
     if(typeof user.login !== 'undefined') {
-      users.push({name:user.login, id:socket.id}); console.log('users',users);
+      users.push({name:user.login, id:socket.id}); 
     }
   });
 
@@ -32,9 +32,9 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('message', message);
   });
 
-  socket.on('disconnect', () => { console.log('tabl',users); console.log('socket',socket.id);
-    const index = users.findIndex(el => el.id == socket.id); console.log('index',index);
-    if(index !== -1) { console.log(users[index].name);
+  socket.on('disconnect', () => { 
+    const index = users.findIndex(el => el.id == socket.id); 
+    if(index !== -1) { 
       socket.broadcast.emit('message', {author:'ChatBot', content: users[index].name + ' has left the conversation... :('});
       users.splice(index,1);
     }
